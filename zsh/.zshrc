@@ -1,5 +1,9 @@
 # ~/.zshrc
 
+# Tmuxifier
+export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
+eval "$(tmuxifier init -)"
+
 # Find and set branch name var if in git repository.
 function git_branch_name()
 {
