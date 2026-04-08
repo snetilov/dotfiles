@@ -12,6 +12,9 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
 
+# Load completions
+autoload -U compinit && compinit
+
 # Load Starship prompt
 eval "$(~/.local/bin/starship init zsh)"
 
