@@ -47,12 +47,12 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias ls='ls --color'
 
 # Fzf integration
-eval "$(fzf --zsh)"
+command -v fzf >/dev/null && eval "$(fzf --zsh)"
 
 # Load Starship prompt
-eval "$(~/.local/bin/starship init zsh)"
+command -v starship >/dev/null && eval "$(~/.local/bin/starship init zsh)"
 
 # Tmuxifier
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-eval "$(tmuxifier init -)"
+command -v tmuxifier >/dev/null && eval "$(tmuxifier init -)"
 
