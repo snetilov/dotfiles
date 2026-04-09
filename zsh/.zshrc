@@ -25,7 +25,7 @@ autoload -U compinit && compinit
 
 # History
 HISTSIZE=5000
-HISSFILE=~/.zsh_history
+HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 setopt appendhistory
