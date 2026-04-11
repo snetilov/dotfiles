@@ -50,6 +50,7 @@ alias ls='ls --color'
 command -v fzf >/dev/null && eval "$(fzf --zsh)"
 
 # Load Starship prompt
+export PATH="$HOME/.local/bin:$PATH"
 command -v starship >/dev/null && eval "$(~/.local/bin/starship init zsh)"
 
 # Tmuxifier
