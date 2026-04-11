@@ -47,10 +47,13 @@ return {
   --   -- Replace this with your scheme-specific settings or remove to use the defaults
     -- transparent = true,
     flavour = "mocha", -- "latte, frappe, macchiato, mocha"
+    integrations = {
+      lualine = true,
+    },
   },
   config = function(_, opts)
     require('catppuccin').setup(opts) -- Replace this with your favorite colorscheme
-    vim.cmd("colorscheme catppuccin") -- Replace this with your favorite colorscheme
+    vim.cmd([[colorscheme catppuccin]]) -- Replace this with your favorite colorscheme
   end
 }
 

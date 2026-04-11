@@ -1,4 +1,3 @@
-
 local opt = vim.opt
 
 -- Session Management
