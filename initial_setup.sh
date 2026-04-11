@@ -4,4 +4,4 @@
 mkdir -R ~/.local/bin
 curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir ~/.local/bin
 
-apt install fzf
+apt install fzf lua5.1 luarocks neovim
