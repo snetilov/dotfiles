@@ -4,8 +4,18 @@ local opt = vim.opt
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- Line Numbers
-opt.relativenumber = true
 opt.number = true
+opt.relativenumber = true
+vim.api.nvim_create_autocmd("InsertEnter", {
+  callback = function()
+    vim.opt.relativenumber = false
+  end,
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function()
+    vim.opt.relativenumber = true
+  end,
+})
 
 -- Tabs & Indentation
 opt.tabstop = 2
