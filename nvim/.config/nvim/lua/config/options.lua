@@ -56,10 +56,11 @@ opt.splitbelow = true
 -- Consider - as part of keyword
 opt.iskeyword:append("-")
 
--- Disable mouse while in vim
+-- Disable the mouse while in nvim
 opt.mouse = ""
 
 -- Folding
 opt.foldlevel = 20
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
+
