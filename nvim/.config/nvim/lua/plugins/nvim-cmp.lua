@@ -71,6 +71,7 @@ return {
         end, { 'i', 's' }),
       },
       sources = cmp.config.sources({
+        { name = "lazydev", group_index = 0 }, -- lazydev completions take priority for lua files
         { name = "nvim_lsp" }, -- lsp 
         { name = "luasnip" }, -- snippets
         { name = "buffer" }, -- text within current buffer

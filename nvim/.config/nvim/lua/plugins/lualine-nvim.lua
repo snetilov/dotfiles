@@ -12,6 +12,20 @@ return {
     -- https://https://github.com/catppuccin/nvim
     'catppuccin/nvim', -- Catppuccin Nvim
   },
+  config = function (_, opts)
+    require('lsp-progress').setup()
+
+    require('lualine').setup(opts)
+
+    -- Refresh lualine whenever LSP progress updates
+    vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+    vim.api.nvim_create_autocmd("User", {
+      group = "lualine_augroup",
+      pattern = "LspProgressStatusUpdate",
+      callback = require("lualine").refresh,
+    })
+  end,
+
   opts = {
     options = {
       -- For more themes, see https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
@@ -33,7 +47,10 @@ return {
             modified = '[+]',      -- Text to show when the file is modified.
             readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
           }
-        }
+        },
+        function()
+          return require('lsp-progress').progress()
+        end,
       }
     }
   }
