@@ -7,7 +7,26 @@ local keymap = vim.keymap
 keymap.set("n", "<leader>wq", ":wq<CR>") -- save and quit
 keymap.set("n", "<leader>qq", ":q!<CR>") -- quit without saving
 keymap.set("n", "<leader>ww", ":w<CR>") -- save
-keymap.set("n", "gx", ":!open <c-r><c-a><CR>") -- open URL under cursor
+keymap.set("n", "gx", function()
+  local url = vim.fn.expand("<cfile>")
+  if ulr == "" then
+    return
+  end
+
+  if vim.ui.open then
+    vim.ui.open(url)
+    return
+  end
+
+  local open_cmd = "xdg-open"
+  if vim.fn.has("mac") == 1 then
+    open_cmd = "open"
+  elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+    open_cmd = "explorer.exe"
+  end
+
+  vimfn.jobstart({ open_cmd, url }, { detach = true})
+end) -- open URL under function 
 
 -- Split window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
@@ -40,8 +59,8 @@ keymap.set("n", "<leader>qp", ":cprev<CR>") -- jump to prev quickfix list item
 keymap.set("n", "<leader>ql", ":clast<CR>") -- jump to last quickfix list item
 keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 
--- Vim-maximizer
-keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>") -- toggle maximize tab
+-- Windows.nvim
+keymap.set("n", "<leader>sm", "<cmd>WindowsMaximize<CR>") -- toggle maximize tab
 
 -- Nvim-tree
 keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer

@@ -22,7 +22,7 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
-vim.bo.softtabstop = 2
+opt.softtabstop = 2
 
 -- Line Wrapping
 opt.wrap = false
@@ -62,5 +62,5 @@ opt.mouse = ""
 -- Folding
 opt.foldlevel = 20
 opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Utilize Treesitter folds
 

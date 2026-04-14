@@ -41,6 +41,9 @@ return {
         'quick_lint_js',
         -- 'tsserver', -- requires npm to be installed
         'yamlls', -- requires npm to be installed
+      },
+      automatic_enable = {
+        exclude = { 'jdtls' }, -- handled by ftplugin/java.lua with jdtls.start_or_attach
       }
     })
 
