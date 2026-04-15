@@ -83,8 +83,10 @@ keymap.set('n', '<leader>ft', function() -- grep file contents in current nvim-t
   require('telescope.builtin').live_grep({search_dirs = {node.absolute_path}})
 end)
 
--- Git-blame
-keymap.set("n", "<leader>gb", ":GitBlameToggle<CR>") -- toggle git blame
+-- GitSigns
+vim.keymap.set("n", "<leader>gb", function()
+  require("gitsigns").blame()
+end)
 
 -- Vim REST Console
 keymap.set("n", "<leader>xr", ":call VrcQuery()<CR>") -- Run REST query
