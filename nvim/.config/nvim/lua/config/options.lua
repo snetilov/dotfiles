@@ -17,6 +17,20 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   end,
 })
 
+-- Dynamic command Line
+vim.o.cmdheight = 0
+vim.api.nvim_create_autocmd({ "CmdlineEnter" }, {
+  callback = function()
+    vim.o.cmdheight = 1
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
+  callback = function()
+    vim.o.cmdheight = 0
+  end,
+})
+
 -- Tabs & Indentation
 opt.tabstop = 2
 opt.shiftwidth = 2

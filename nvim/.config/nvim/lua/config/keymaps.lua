@@ -9,7 +9,7 @@ keymap.set("n", "<leader>qq", ":q!<CR>") -- quit without saving
 keymap.set("n", "<leader>ww", ":w<CR>") -- save
 keymap.set("n", "gx", function()
   local url = vim.fn.expand("<cfile>")
-  if ulr == "" then
+  if url == "" then
     return
   end
 
@@ -25,7 +25,7 @@ keymap.set("n", "gx", function()
     open_cmd = "explorer.exe"
   end
 
-  vimfn.jobstart({ open_cmd, url }, { detach = true})
+  vim.fn.jobstart({ open_cmd, url }, { detach = true})
 end) -- open URL under function 
 
 -- Split window management
