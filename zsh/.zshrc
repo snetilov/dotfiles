@@ -3,16 +3,24 @@
 # Zinit install (if not already installed)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+[ ! -d $ZINIT_HOME/.git ] && git clone --depth=1 https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Plugins (optional but useful)
 # Load completions
-autoload -U compinit && compinit
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit -u
+else
+  compinit -C -u
+fi
 # Order is IMPORTANT
+zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
+zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
 #zinit light zsh-users/zsh-syntax-highlighting
+zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # Catppuccin mocha
@@ -47,13 +55,13 @@ alias ls='eza'
 alias vim="nvim"
 
 # Fzf integration
-command -v fzf >/dev/null && eval "$(fzf --zsh)"
+(( $+commands[fzf] )) && eval "$(fzf --zsh)"
 
 # Load Starship prompt
 export PATH="$HOME/.local/bin:$PATH"
-command -v starship >/dev/null && eval "$(~/.local/bin/starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # Tmuxifier
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-command -v tmuxifier >/dev/null && eval "$(tmuxifier init -)"
+(( $+commands[tmuxifier] )) && eval "$(tmuxifier init -)"
 
