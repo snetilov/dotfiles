@@ -79,20 +79,35 @@ keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer
 keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>") -- toggle focus to file explorer
 keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>") -- find file in file explorer
 
--- Telescope
-keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, {}) -- fuzzy find files in project
-keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, {}) -- grep file contents in project
-keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, {}) -- fuzzy find open buffers
-keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, {}) -- fuzzy find help tags
-keymap.set('n', '<leader>fs', require('telescope.builtin').current_buffer_fuzzy_find, {}) -- fuzzy find in current file buffer
-keymap.set('n', '<leader>fo', require('telescope.builtin').lsp_document_symbols, {}) -- fuzzy find LSP/class symbols
-keymap.set('n', '<leader>fi', require('telescope.builtin').lsp_incoming_calls, {}) -- fuzzy find LSP/incoming calls
--- keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({default_text=":method:"}) end) -- fuzzy find methods in current class
-keymap.set('n', '<leader>fm', function() require('telescope.builtin').treesitter({symbols={'function', 'method'}}) end) -- fuzzy find methods in current class
-keymap.set('n', '<leader>ft', function() -- grep file contents in current nvim-tree node
-  local success, node = pcall(function() return require('nvim-tree.lib').get_node_at_cursor() end)
-  if not success or not node then return end;
-  require('telescope.builtin').live_grep({search_dirs = {node.absolute_path}})
+-- Snacks.picker
+local picker = require("snacks.picker")
+local keymap = vim.keymap
+
+keymap.set('n', '<leader>ff', function() picker.files() end)
+keymap.set('n', '<leader>fg', function() picker.grep() end)
+keymap.set('n', '<leader>fb', function() picker.buffers() end)
+keymap.set('n', '<leader>fh', function() picker.help() end)
+keymap.set('n', '<leader>fs', function() picker.lines() end)
+keymap.set('n', '<leader>fo', function() picker.lsp_symbols() end)
+keymap.set('n', '<leader>fi', function() picker.lsp_incoming_calls() end)
+
+keymap.set('n', '<leader>fm', function()
+  picker.treesitter({ symbols = { "function", "method" } })
+end)
+
+keymap.set('n', '<leader>ft', function()
+  local success, node = pcall(function()
+    return require('nvim-tree.lib').get_node_at_cursor()
+  end)
+  if not success or not node then return end
+
+  picker.grep({
+    dirs = { node.absolute_path },
+  })
+end)
+
+keymap.set('n', '<leader>f', function()
+  picker.smart()
 end)
 
 -- GitSigns
@@ -151,7 +166,12 @@ keymap.set("n", "<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>")
 keymap.set("n", "<leader>bc", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>")
 keymap.set("n", "<leader>bl", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>")
 keymap.set("n", '<leader>br', "<cmd>lua require'dap'.clear_breakpoints()<cr>")
-keymap.set("n", '<leader>ba', '<cmd>Telescope dap list_breakpoints<cr>')
+keymap.set("n", "<leader>ba", function()
+  require("dapui").float_element("breakpoints", { enter = true })
+end)
+keymap.set("n", "<leader>db", function()
+  picker.dap_breakpoints()
+end)
 keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>")
 keymap.set("n", "<leader>dj", "<cmd>lua require'dap'.step_over()<cr>")
 keymap.set("n", "<leader>dk", "<cmd>lua require'dap'.step_into()<cr>")
@@ -162,7 +182,12 @@ keymap.set("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>")
 keymap.set("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>")
 keymap.set("n", '<leader>di', function() require "dap.ui.widgets".hover() end)
 keymap.set("n", '<leader>d?', function() local widgets = require "dap.ui.widgets"; widgets.centered_float(widgets.scopes) end)
-keymap.set("n", '<leader>df', '<cmd>Telescope dap frames<cr>')
-keymap.set("n", '<leader>dh', '<cmd>Telescope dap commands<cr>')
-keymap.set("n", '<leader>de', function() require('telescope.builtin').diagnostics({default_text=":E:"}) end)
-
+keymap.set("n", "<leader>df", function()
+  picker.dap_frames()
+end)
+keymap.set("n", "<leader>dh", function()
+  picker.dap_commands()
+end)
+keymap.set("n", "<leader>de", function()
+  picker.diagnostics({ pattern = ":E:" })
+end)
