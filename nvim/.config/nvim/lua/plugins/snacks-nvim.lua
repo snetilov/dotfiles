@@ -4,7 +4,7 @@ return {
   "folke/snacks.nvim",
   opts = {
     bigfile = { enabled = true},
-    indent = { enabled = true, scope = { enabled = false }, animate = { enabled = false } }, 
+    indent = { enabled = true, scope = { enabled = true }, animate = { enabled = false } }, 
     notifier = { enabled = true },
     picker = { enabled = true}
   },
