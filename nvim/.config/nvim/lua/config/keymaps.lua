@@ -75,15 +75,36 @@ keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 keymap.set("n", "<leader>sm", "<cmd>WindowsMaximize<CR>") -- toggle maximize tab
 
 -- Nvim-tree
-keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer
-keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>") -- toggle focus to file explorer
-keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>") -- find file in file explorer
+-- keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer
+-- keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>") -- toggle focus to file explorer
+-- keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>") -- find file in file explorer
+local mini_files = require("mini.files")
+
+-- Open explorer (like toggle, but simpler)
+vim.keymap.set("n", "<leader>ee", function()
+  mini_files.open()
+end, { desc = "Open mini.files" })
+
+-- "Focus" doesn't really exist, but reopening works similarly
+vim.keymap.set("n", "<leader>er", function()
+  mini_files.open()
+end, { desc = "Open mini.files (focus)" })
+
+-- Reveal current file (closest to NvimTreeFindFile)
+vim.keymap.set("n", "<leader>ef", function()
+  mini_files.open(vim.api.nvim_buf_get_name(0))
+end, { desc = "Reveal current file" })
 
 -- Snacks.picker
 local picker = require("snacks.picker")
 local keymap = vim.keymap
 
-keymap.set('n', '<leader>ff', function() picker.files() end)
+vim.keymap.set("n", "<leader>ff", function()
+  local dir = vim.fn.expand("%:p:h")
+  require("snacks.picker").files({
+    cwd = dir,
+  })
+end)
 keymap.set('n', '<leader>fg', function() picker.grep() end)
 keymap.set('n', '<leader>fb', function() picker.buffers() end)
 keymap.set('n', '<leader>fh', function() picker.help() end)
