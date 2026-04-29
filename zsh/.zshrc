@@ -6,6 +6,8 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME/.git ] && git clone --depth=1 https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
+export EDITOR='nvim'
+
 # Plugins (optional but useful)
 # Load completions
 autoload -Uz compinit
@@ -65,3 +67,5 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 (( $+commands[tmuxifier] )) && eval "$(tmuxifier init -)"
 
+# Machine-local-overrrides
+[[ -f "$HOME/.zshrc.local"]] && source "$HOME/.zshrc"
