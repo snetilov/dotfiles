@@ -68,4 +68,4 @@ export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 (( $+commands[tmuxifier] )) && eval "$(tmuxifier init -)"
 
 # Machine-local-overrrides
-[[ -f "$HOME/.zshrc.local"]] && source "$HOME/.zshrc.local"
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
