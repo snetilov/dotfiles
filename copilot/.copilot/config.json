@@ -1,0 +1,11 @@
+{
+  "beep": true,
+  "hooks": {
+    "notification": [
+      {
+        "matcher": "agent_completed",
+        "command": "printf '\\a'"
+      }
+    ]
+  }
+}
