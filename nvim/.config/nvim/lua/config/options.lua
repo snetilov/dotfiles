@@ -78,3 +78,20 @@ opt.foldlevel = 20
 opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Utilize Treesitter folds
 
+-- Scrolling
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+
+-- Yanking
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  callback = function()
+    vim.hl.on_yank()
+  end,
+})
+
+-- Undoing
+opt.swapfile = false
+opt.backup = false
+opt.undodir = vim.fn.stdpath("data") .. "/undodir"
+vim.opt.undofile = true
