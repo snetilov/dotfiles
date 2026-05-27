@@ -63,9 +63,5 @@ alias vim="nvim"
 export PATH="$HOME/.local/bin:$PATH"
 (( $+commands[starship] )) && eval "$(starship init zsh)"
 
-# Tmuxifier
-export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-(( $+commands[tmuxifier] )) && eval "$(tmuxifier init -)"
-
 # Machine-local-overrrides
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
