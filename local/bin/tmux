@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ! tmux has-session 2>/dev/null; then
+  tmux start-server
+  tmux run-shell "$HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh"
+fi
+
+tmux attach-session
