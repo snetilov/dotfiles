@@ -43,7 +43,7 @@ return {
       },
       -- dev, test, prod, can be anything
       -- see: https://learn.microsoft.com/en-us/aspnet/core/test/http-files?view=aspnetcore-8.0#environment-files
-      default_env = "default",
+      default_env = "dev",
       -- `"b"` = per-buffer env (default), `"g"` = global
       environment_scope = "b",
       -- enable reading vscode rest client environment variables
@@ -195,7 +195,7 @@ return {
       -- (see docs or lua/kulala/config/keymaps.lua)
       -- or override default keymaps as shown in the example below.
       ---@type boolean|table
-      global_keymaps = false,
+      global_keymaps = true,
       --[[
         {
           ["Send request"] = { -- sets global mapping
