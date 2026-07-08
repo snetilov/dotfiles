@@ -60,8 +60,16 @@ alias vim="nvim"
 (( $+commands[fzf] )) && eval "$(fzf --zsh)"
 
 # Load Starship prompt
+#(( $+commands[starship] )) && eval "$(starship init zsh)"
+
+# User-local binaries
 export PATH="$HOME/.local/bin:$PATH"
-(( $+commands[starship] )) && eval "$(starship init zsh)"
+
+# Load Powerlevel10k prompt
+typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
+[[ -r "${ZDOTDIR:-$HOME}/.p10k.zsh" ]] && source "${ZDOTDIR:-$HOME}/.p10k.zsh"
 
 # Machine-local-overrrides
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
