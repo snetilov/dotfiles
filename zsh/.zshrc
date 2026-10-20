@@ -1,5 +1,20 @@
 # ~/.zshrc
 
+# ---------- PATH ----------
+# Set PATH once, before anything looks up commands: after vevery PATH change zsh
+# re-indexes all PATH dirs on the next lookup (~55 ms with WSL's /mnt/c dirs)
+typeset -U path # drop duplicate entries
+if [[ -n $WSL_DISTRO_NAME ]]; then
+  # Windows dirs are on slow 9P mount; keep only needed ones
+  # (explorer.exe for nvim's `gx`, VS Code's `code`).
+  () {
+    local -a keep=(/mnt/c/Windows "/mnt/c/Program Files/Microsoft VS Code/bin")
+    path=(${path:#/mnt/*} ${path:*keep})
+  }
+fi
+# User-local libraries + zinit's bin dir (added here so zinit doesn't change PATH later)
+path=("$HOME/.local/bin" "${XDG_DATA_DIR:-$HOME/.local/share}/zinit/polaris/bin" $path)
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -31,15 +46,21 @@ export GPG_TTY=$(tty)
 # Plugins (optional but useful)
 # Load completions
 autoload -Uz compinit
-if [[ -f ~/.zcompdump && ~/.zcompdump -nt /etc/zshrc ]]; then
-  compinit -C -u
-else
-  compinit -u
-fi
+# Full check (picks up newly installed completions) at most once a day;
+# otherwise load the cached dump as is.
+() {
+  if (( $# )); then
+    compinit -C -u
+  else
+    compinit -u && touch "${ZDOTDIR:-$HOME}/.zcompdump"
+  fi
+} "${ZDOTDIR:-$HOME}"/.zcompdump(N.mh-24)
 # Order is IMPORTANT
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
 zinit ice wait lucid
+# Bind widgets once instead  of rebinding them before every prompt (~10 ms/prompt)
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 zinit light zsh-users/zsh-autosuggestions
 #zinit light zsh-users/zsh-syntax-highlighting
 zinit ice wait lucid
@@ -150,13 +171,10 @@ alias df='df -h'
 (( $+commands[fzf] )) && eval "$(fzf --zsh)"
 
 # Initialize zoxide
-(( $+commands[zoxide] )) && eval "$(zoxide init zsh)" && alias z=zoxide
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # Load Starship prompt
 #(( $+commands[starship] )) && eval "$(starship init zsh)"
-
-# User-local binaries
-export PATH="$HOME/.local/bin:$PATH"
 
 # Load Powerlevel10k prompt
 typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
