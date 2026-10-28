@@ -6,6 +6,7 @@ return {
     local nsMiniFiles = vim.api.nvim_create_namespace("mini_files_git")
     local autocmd = vim.api.nvim_create_autocmd
     local _, MiniFiles = pcall(require, "mini.files")
+    MiniFiles.setup()
 
     -- Cache for git status
     local gitStatusCache = {}
@@ -222,18 +223,6 @@ return {
         local cwd = vim.fs.root(bufnr, ".git")
         if gitStatusCache[cwd] then
           updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
-        end
-      end,
-    })
-
-    vim.api.nvim_create_autocmd("VimEnter", {
-      callback = function()
-        local arg = vim.fn.argv(0)
-
-        if arg ~= "" and vim.fn.isdirectory(arg) == 1 then
-          vim.schedule(function()
-            require("mini.files").open(arg)
-          end)
         end
       end,
     })
