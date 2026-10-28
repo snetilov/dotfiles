@@ -14,10 +14,6 @@ return {
     -- Auto-Install LSPs, linters, formatters, debuggers
     -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
     { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
-
-    -- Useful status updates for LSP
-    -- https://github.com/j-hui/fidget.nvim
-    { 'j-hui/fidget.nvim', opts = {} },
   },
   config = function ()
     require('mason').setup()
