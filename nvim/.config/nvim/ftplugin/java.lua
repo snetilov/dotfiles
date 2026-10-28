@@ -2,7 +2,8 @@
 local home = vim.env.HOME -- Get the home directory
 
 local jdtls = require("jdtls")
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local root_dir = vim.fs.root(0, { { ".git", "mvnw", "pom.xml", "build.gradle" } })
+local project_name = vim.fn.fnamemodify(root_dir or vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
 local system_os = ""
@@ -55,14 +56,14 @@ local config = {
 
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = vim.fs.root(0, { { ".git", "mvnw", "pom.xml", "build.gradle" } }),
+  root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   settings = {
     java = {
       -- TODO Replace this with the absolute path to your main java version (JDTLS requires JDK 21 or higher)
-      home = "/usr/lib/jvm/java-21-openjdk-amd64",
+      home = "/usr/lib/jvm/java-25-openjdk-amd64",
       eclipse = {
         downloadSources = true,
       },
@@ -72,24 +73,8 @@ local config = {
         -- The runtimes' name parameter needs to match a specific Java execution environments.  See https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request and search "ExecutionEnvironment".
         runtimes = {
           {
-            name = "JavaSE-1.8",
-            path = "/usr/lib/jvm/java-8-openjdk-amd64",
-          },
-          {
-            name = "JavaSE-11",
-            path = "/usr/lib/jvm/java-11-openjdk-amd64",
-          },
-          {
-            name = "JavaSE-17",
-            path = "/usr/lib/jvm/java-17-openjdk-amd64",
-          },
-          {
-            name = "JavaSE-19",
-            path = "/usr/lib/jvm/java-19-openjdk-amd64",
-          },
-          {
-            name = "JavaSE-21",
-            path = "/usr/lib/jvm/java-21-openjdk-amd64",
+            name = "JavaSE-25",
+            path = "/usr/lib/jvm/java-25-openjdk-amd64",
           },
         },
       },
