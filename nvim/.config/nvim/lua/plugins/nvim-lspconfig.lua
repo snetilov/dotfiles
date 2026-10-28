@@ -8,8 +8,6 @@ return {
     -- LSP Management
     -- https://github.com/williamboman/mason.nvim
     { 'williamboman/mason.nvim' },
-    -- https://github.com/williamboman/mason-lspconfig.nvim
-    { 'williamboman/mason-lspconfig.nvim' },
 
     -- Auto-Install LSPs, linters, formatters, debuggers
     -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
@@ -21,31 +19,23 @@ return {
   },
   config = function ()
     require('mason').setup()
-    require('mason-lspconfig').setup({
-      -- Install these LSPs automatically
-      ensure_installed = {
-        'bashls', -- requires npm to be installed
-        'cssls', -- requires npm to be installed
-        'html', -- requires npm to be installed
-        'gradle_ls',
-        'groovyls',
-        'lua_ls',
-        'jdtls',
-        'jsonls', -- requires npm to be installed
-        'lemminx',
-        'marksman',
-        'quick_lint_js',
-        -- 'tsserver', -- requires npm to be installed
-        'yamlls', -- requires npm to be installed
-      },
-      automatic_enable = {
-        exclude = { 'jdtls' }, -- handled by ftplugin/java.lua with jdtls.start_or_attach
-      }
-    })
 
     require('mason-tool-installer').setup({
       -- Install these linters, formatters, debuggers automatically
       ensure_installed = {
+        'bash-language-server', -- requires npm to be installed
+        'css-lsp', -- requires npm to be installed
+        'html-lsp', -- requires npm to be installed
+        'gradle-language-server',
+        'groovy-language-server',
+        'lua-language-server',
+        'jdtls',
+        'json-lsp', -- requires npm to be installed
+        'lemminx',
+        'marksman',
+        'quick-lint-js',
+        -- 'typescript-language-server', -- requires npm to be installed
+        'yaml-language-server', -- requires npm to be installed
         'java-debug-adapter',
         'java-test',
       },
@@ -54,6 +44,20 @@ return {
     -- There is an issue with mason-tools-installer running with VeryLazy, since it triggers on VimEnter which has already occurred prior to this plugin loading so we need to call install explicitly
     -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim/issues/39
     vim.api.nvim_command('MasonToolsInstall')
+
+    vim.lsp.enable({
+      'bashls',
+      'cssls',
+      'html',
+      'gradle_ls',
+      'groovyls',
+      'lua_ls',
+      'jsonls',
+      'lemminx',
+      'marksman',
+      'quick_lint_js',
+      'yamlls',
+    })
 
     vim.lsp.config['lua_ls'] = {
       -- Command and arguments to start the server.
