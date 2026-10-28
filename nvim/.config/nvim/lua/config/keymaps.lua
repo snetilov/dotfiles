@@ -1,6 +1,3 @@
--- Set leader key to space
-vim.g.mapleader = " "
-
 local keymap = vim.keymap
 
 -- General keymaps
@@ -79,7 +76,6 @@ end, { desc = "Reveal current file" })
 
 -- Snacks.picker
 local picker = require("snacks.picker")
-local keymap = vim.keymap
 
 vim.keymap.set("n", "<leader>ff", function()
   local dir = vim.fn.expand("%:p:h")
