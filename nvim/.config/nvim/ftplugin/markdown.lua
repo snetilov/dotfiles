@@ -5,7 +5,7 @@ vim.opt_local.linebreak = true -- Line break on whole word
 
 -- Allow j/k shen navigating wrapped llines
 vim.keymap.set("n", "j", 'v:count == 0 ? "gj" : "j"', { buffer = 0, expr = true, silent = true })
-vim.keymap.set("n", "k", 'v:count == 0 ? "gk" : "K"', { buffer = 0, expr = true, silent = true })
+vim.keymap.set("n", "k", 'v:count == 0 ? "gk" : "k"', { buffer = 0, expr = true, silent = true })
 
 -- Spell check
 vim.opt_local.spelllang = 'en_us'
