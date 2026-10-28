@@ -145,8 +145,6 @@ local config = {
       },
     },
   },
-  -- Needed for auto-completion with method signatures and placeholders
-  capabilities = require("cmp_nvim_lsp").default_capabilities(),
   flags = {
     allow_incremental_sync = true,
   },
