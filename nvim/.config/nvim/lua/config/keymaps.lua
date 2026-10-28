@@ -34,12 +34,6 @@ keymap.set('n', '<c-j>', ':wincmd j<CR>')
 keymap.set('n', '<c-h>', ':wincmd h<CR>')
 keymap.set('n', '<c-l>', ':wincmd l<CR>')
 
--- Vim-tmux-navigator
-keymap.set('n', 'C-h', ':TmuxNavigateLeft<CR>')
-keymap.set('n', 'C-j', ':TmuxNavigateDown<CR>')
-keymap.set('n', 'C-k', ':TmuxNavigateUp<CR>')
-keymap.set('n', 'C-l', ':TmuxNavigateRight<CR>')
-
 -- Split window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
 keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
