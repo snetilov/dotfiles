@@ -34,21 +34,15 @@ keymap.set('n', '<c-j>', ':wincmd j<CR>')
 keymap.set('n', '<c-h>', ':wincmd h<CR>')
 keymap.set('n', '<c-l>', ':wincmd l<CR>')
 
--- Vim-tmux-navigator
-keymap.set('n', 'C-h', ':TmuxNavigateLeft<CR>')
-keymap.set('n', 'C-j', ':TmuxNavigateDown<CR>')
-keymap.set('n', 'C-k', ':TmuxNavigateUp<CR>')
-keymap.set('n', 'C-l', ':TmuxNavigateRight<CR>')
-
 -- Split window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
+keymap.set("n", "<leader>ss", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
 keymap.set("n", "<leader>sx", ":close<CR>") -- close split window
 keymap.set("n", "<leader>sj", "<C-w>-") -- make split window height shorter
 keymap.set("n", "<leader>sk", "<C-w>+") -- make split windows height taller
-keymap.set("n", "<leader>sl", "<C-w>>5") -- make split windows width bigger 
-keymap.set("n", "<leader>sh", "<C-w><5") -- make split windows width smaller
+keymap.set("n", "<leader>sl", "5<C-w>>") -- make split windows width bigger 
+keymap.set("n", "<leader>sh", "5<C-w><") -- make split windows width smaller
 
 -- Tab management
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open a new tab
@@ -152,10 +146,9 @@ keymap.set('n', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
 keymap.set('v', '<leader>gf', '<cmd>lua vim.lsp.buf.format({async = true})<CR>')
 keymap.set('n', '<leader>ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>')
-keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.jump({ count = -1, float = true })<CR>')
+keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>')
 keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>')
 
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
 keymap.set("n", '<leader>go', function()
