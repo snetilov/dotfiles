@@ -82,6 +82,10 @@ return {
     ---@return nil
     local function updateMiniWithGit(buf_id, gitStatusMap)
       vim.schedule(function()
+        if not vim.api.nvim_buf_is_valid(buf_id) then
+          return
+        end
+        vim.api.nvim_buf_clear_namespace(buf_id, nsMiniFiles, 0, -1)
         local nlines = vim.api.nvim_buf_line_count(buf_id)
         local cwd = vim.fs.root(buf_id, ".git")
         local escapedcwd = cwd and vim.pesc(cwd)
@@ -170,7 +174,7 @@ return {
       end
       local cwd = vim.fs.root(buf_id, ".git")
       -- local cwd = vim.fn.expand("%:p:h")
-      local currentTime = os.time()
+      local currentTime = uv.now()
 
       if
         gitStatusCache[cwd]
@@ -219,11 +223,7 @@ return {
       group = augroup("update"),
       pattern = "MiniFilesBufferUpdate",
       callback = function(args)
-        local bufnr = args.data.buf_id
-        local cwd = vim.fs.root(bufnr, ".git")
-        if gitStatusCache[cwd] then
-          updateMiniWithGit(bufnr, gitStatusCache[cwd].statusMap)
-        end
+        updateGitStatus(args.data.buf_id)
       end,
     })
   end,
