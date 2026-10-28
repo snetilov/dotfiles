@@ -40,5 +40,20 @@ return {
         end
       end,
     })
+
+    require('nvim-treesitter-textobjects').setup({ select = { lookahead = true } })
+    local select = require('nvim-treesitter-textobjects.select')
+    for key, query in pairs({
+      af = '@function.outer',
+      ['if'] = '@function.inner',
+      ac = '@class.outer',
+      ic = '@class.inner',
+      aa = '@parameter.outer',
+      ia = '@parameter.inner',
+    }) do
+      vim.keymap.set({ 'x', 'o' }, key, function()
+        select.select_textobject(query, 'textobjects')
+      end)
+    end
   end
 }
