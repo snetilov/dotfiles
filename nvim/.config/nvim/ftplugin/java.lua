@@ -1,5 +1,6 @@
 -- JDTLS (Java LSP) configuration
 local home = vim.env.HOME -- Get the home directory
+local mason = vim.fn.stdpath("data") .. "/mason"
 
 local jdtls = require("jdtls")
 local root_dir = vim.fs.root(0, { { ".git", "mvnw", "pom.xml", "build.gradle" } })
@@ -22,11 +23,11 @@ end
 
 -- Needed for debugging
 local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
+  vim.fn.glob(mason .. "/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
 }
 
 -- Needed for running/debugging unit tests
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(mason .. "/share/java-test/*.jar", 1), "\n"))
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
@@ -37,9 +38,7 @@ local config = {
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
-    "-Dlog.protocol=true",
-    "-Dlog.level=ALL",
-    "-javaagent:" .. home .. "/.local/share/nvim/mason/share/jdtls/lombok.jar",
+    "-javaagent:" .. mason .. "/share/jdtls/lombok.jar",
     "-Xmx4g",
     "--add-modules=ALL-SYSTEM",
     "--add-opens", "java.base/java.util=ALL-UNNAMED",
@@ -47,9 +46,9 @@ local config = {
 
     -- Eclipse jdtls location
     "-jar",
-    home .. "/.local/share/nvim/mason/share/jdtls/plugins/org.eclipse.equinox.launcher.jar",
+    mason .. "/share/jdtls/plugins/org.eclipse.equinox.launcher.jar",
     "-configuration",
-    home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. system_os,
+    mason .. "/packages/jdtls/config_" .. system_os,
     "-data",
     workspace_dir,
   },
@@ -148,3 +147,8 @@ end
 
 -- This starts a new client & server, or attaches to an existing client & server based on the `root_dir`.
 jdtls.start_or_attach(config)
+
+vim.keymap.set("n", "<leader>go", function() jdtls.organize_imports() end, { buffer = 0 })
+vim.keymap.set("n", "<leader>gu", function() jdtls.update_projects_config() end, { buffer = 0 })
+vim.keymap.set("n", "<leader>tc", function() jdtls.test_class() end, { buffer = 0 })
+vim.keymap.set("n", "<leader>tm", function() jdtls.test_nearest_method() end, { buffer = 0 })

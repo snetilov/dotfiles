@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 -- Session Management
-opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,winsize,winpos,terminal,localoptions"
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- Line Numbers
 opt.number = true
@@ -35,7 +35,6 @@ vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
-opt.autoindent = true
 opt.softtabstop = 2
 
 -- Line Wrapping
@@ -54,9 +53,13 @@ opt.background = "dark"
 opt.signcolumn = "yes"
 opt.showmode = false
 opt.winborder = "rounded"
-
--- Backspace
-opt.backspace = "indent,eol,start"
+vim.diagnostic.config({
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+    end,
+  },
+})
 
 -- Clipboard
 opt.clipboard:append("unnamedplus")
@@ -90,6 +93,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Undoing
 opt.swapfile = false
-opt.backup = false
 opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 vim.opt.undofile = true
