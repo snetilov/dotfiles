@@ -149,7 +149,6 @@ keymap.set('n', '<leader>gl', '<cmd>lua vim.diagnostic.open_float()<CR>')
 keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.jump({ count = -1, float = true })<CR>')
 keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>')
 keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-keymap.set('i', '<C-Space>', '<cmd>lua vim.lsp.buf.completion()<CR>')
 
 -- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
 keymap.set("n", '<leader>go', function()
