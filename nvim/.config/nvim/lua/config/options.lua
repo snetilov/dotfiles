@@ -35,7 +35,6 @@ vim.api.nvim_create_autocmd({ "CmdlineLeave" }, {
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
-opt.autoindent = true
 opt.softtabstop = 2
 
 -- Line Wrapping
@@ -61,9 +60,6 @@ vim.diagnostic.config({
     end,
   },
 })
-
--- Backspace
-opt.backspace = "indent,eol,start"
 
 -- Clipboard
 opt.clipboard:append("unnamedplus")
@@ -97,6 +93,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Undoing
 opt.swapfile = false
-opt.backup = false
 opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 vim.opt.undofile = true
