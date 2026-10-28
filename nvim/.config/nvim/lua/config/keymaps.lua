@@ -125,9 +125,6 @@ vim.keymap.set("n", "<leader>gb", function()
   require("gitsigns").blame()
 end)
 
--- Vim REST Console
-keymap.set("n", "<leader>xr", ":call VrcQuery()<CR>") -- Run REST query
-
 -- LSP
 keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
 keymap.set('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
