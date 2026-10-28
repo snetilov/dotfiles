@@ -1,4 +1,6 @@
 -- Status line
+local lsp_status = ""
+
 return {
   -- https://github.com/nvim-lualine/lualine.nvim
   'nvim-lualine/lualine.nvim',
@@ -7,22 +9,20 @@ return {
   dependencies = {
     -- https://github.com/nvim-tree/nvim-web-devicons
     'nvim-tree/nvim-web-devicons', -- fancy icons
-    -- https://github.com/linrongbin16/lsp-progress.nvim
-    'linrongbin16/lsp-progress.nvim', -- LSP loading progress
     -- https://https://github.com/catppuccin/nvim
     'catppuccin/nvim', -- Catppuccin Nvim
   },
   config = function (_, opts)
-    require('lsp-progress').setup()
-
     require('lualine').setup(opts)
 
     -- Refresh lualine whenever LSP progress updates
     vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
-    vim.api.nvim_create_autocmd("User", {
+    vim.api.nvim_create_autocmd("LspProgress", {
       group = "lualine_augroup",
-      pattern = "LspProgressStatusUpdate",
-      callback = require("lualine").refresh,
+      callback = function(ev)
+        lsp_status = ev.data.params.value.kind == "end" and "" or vim.lsp.status():gsub("%%", "%%%%")
+        require("lualine").refresh()
+      end,
     })
   end,
 
@@ -49,7 +49,7 @@ return {
           }
         },
         function()
-          return require('lsp-progress').progress()
+          return lsp_status
         end,
       }
     }

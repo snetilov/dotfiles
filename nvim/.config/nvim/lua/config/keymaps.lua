@@ -1,6 +1,3 @@
--- Set leader key to space
-vim.g.mapleader = " "
-
 local keymap = vim.keymap
 
 -- General keymaps
@@ -28,12 +25,6 @@ keymap.set("n", "gx", function()
   vim.fn.jobstart({ open_cmd, url }, { detach = true})
 end) -- open URL under function 
 
--- Navigate vim panes better
-keymap.set('n', '<c-k>', ':wincmd k<CR>')
-keymap.set('n', '<c-j>', ':wincmd j<CR>')
-keymap.set('n', '<c-h>', ':wincmd h<CR>')
-keymap.set('n', '<c-l>', ':wincmd l<CR>')
-
 -- Split window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
 keymap.set("n", "<leader>ss", "<C-w>s") -- split window horizontally
@@ -43,6 +34,7 @@ keymap.set("n", "<leader>sj", "<C-w>-") -- make split window height shorter
 keymap.set("n", "<leader>sk", "<C-w>+") -- make split windows height taller
 keymap.set("n", "<leader>sl", "5<C-w>>") -- make split windows width bigger 
 keymap.set("n", "<leader>sh", "5<C-w><") -- make split windows width smaller
+keymap.set("n", "<leader>sm", function() Snacks.zen.zoom() end) -- toggle maximize tab
 
 -- Tab management
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open a new tab
@@ -65,13 +57,6 @@ keymap.set("n", "<leader>qp", ":cprev<CR>") -- jump to prev quickfix list item
 keymap.set("n", "<leader>ql", ":clast<CR>") -- jump to last quickfix list item
 keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 
--- Windows.nvim
-keymap.set("n", "<leader>sm", "<cmd>WindowsMaximize<CR>") -- toggle maximize tab
-
--- Nvim-tree
--- keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer
--- keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>") -- toggle focus to file explorer
--- keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>") -- find file in file explorer
 local mini_files = require("mini.files")
 
 -- Open explorer (like toggle, but simpler)
@@ -91,7 +76,6 @@ end, { desc = "Reveal current file" })
 
 -- Snacks.picker
 local picker = require("snacks.picker")
-local keymap = vim.keymap
 
 vim.keymap.set("n", "<leader>ff", function()
   local dir = vim.fn.expand("%:p:h")
@@ -111,13 +95,12 @@ keymap.set('n', '<leader>fm', function()
 end)
 
 keymap.set('n', '<leader>ft', function()
-  local success, node = pcall(function()
-    return require('nvim-tree.lib').get_node_at_cursor()
-  end)
-  if not success or not node then return end
+  local success, entry = pcall(mini_files.get_fs_entry)
+  if not success or not entry then return end
 
+  mini_files.close()
   picker.grep({
-    dirs = { node.absolute_path },
+    dirs = { entry.path },
   })
 end)
 
@@ -129,9 +112,6 @@ end)
 vim.keymap.set("n", "<leader>gb", function()
   require("gitsigns").blame()
 end)
-
--- Vim REST Console
-keymap.set("n", "<leader>xr", ":call VrcQuery()<CR>") -- Run REST query
 
 -- LSP
 keymap.set('n', '<leader>gg', '<cmd>lua vim.lsp.buf.hover()<CR>')
