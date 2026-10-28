@@ -37,6 +37,7 @@ keymap.set("n", "<leader>sj", "<C-w>-") -- make split window height shorter
 keymap.set("n", "<leader>sk", "<C-w>+") -- make split windows height taller
 keymap.set("n", "<leader>sl", "5<C-w>>") -- make split windows width bigger 
 keymap.set("n", "<leader>sh", "5<C-w><") -- make split windows width smaller
+keymap.set("n", "<leader>sm", function() Snacks.zen.zoom() end) -- toggle maximize tab
 
 -- Tab management
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open a new tab
@@ -58,9 +59,6 @@ keymap.set("n", "<leader>qn", ":cnext<CR>") -- jump to next quickfix list item
 keymap.set("n", "<leader>qp", ":cprev<CR>") -- jump to prev quickfix list item
 keymap.set("n", "<leader>ql", ":clast<CR>") -- jump to last quickfix list item
 keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
-
--- Windows.nvim
-keymap.set("n", "<leader>sm", "<cmd>WindowsMaximize<CR>") -- toggle maximize tab
 
 local mini_files = require("mini.files")
 
