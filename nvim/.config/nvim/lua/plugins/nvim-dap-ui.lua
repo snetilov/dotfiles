@@ -105,16 +105,6 @@ return {
       require('dapui').open()
     end
 
-    dap.listeners.before.event_terminated["dapui_config"] = function()
-      -- Commented to prevent DAP UI from closing when unit tests finish
-      -- require('dapui').close()
-    end
-
-    dap.listeners.before.event_exited["dapui_config"] = function()
-      -- Commented to prevent DAP UI from closing when unit tests finish
-      -- require('dapui').close()
-    end
-
     -- Add dap configurations based on your language/adapter settings
     -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
     dap.configurations.java = {
@@ -138,26 +128,6 @@ return {
         request = 'attach';
         hostName = "127.0.0.1";
         port = 5005;
-      },
-      {
-        name = "My Custom Java Run Configuration",
-        type = "java",
-        request = "launch",
-        -- You need to extend the classPath to list your dependencies.
-        -- `nvim-jdtls` would automatically add the `classPaths` property if it is missing
-        -- classPaths = {},
-
-        -- If using multi-module projects, remove otherwise.
-        -- projectName = "yourProjectName",
-
-        -- javaExec = "java",
-        mainClass = "replace.with.your.fully.qualified.MainClass",
-
-        -- If using the JDK9+ module system, this needs to be extended
-        -- `nvim-jdtls` would automatically populate this property
-        -- modulePaths = {},
-        vmArgs = "" ..
-          "-Xmx2g "
       },
     }
   end
