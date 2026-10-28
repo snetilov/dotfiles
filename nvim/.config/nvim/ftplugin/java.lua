@@ -147,3 +147,8 @@ end
 
 -- This starts a new client & server, or attaches to an existing client & server based on the `root_dir`.
 jdtls.start_or_attach(config)
+
+vim.keymap.set("n", "<leader>go", function() jdtls.organize_imports() end, { buffer = 0 })
+vim.keymap.set("n", "<leader>gu", function() jdtls.update_projects_config() end, { buffer = 0 })
+vim.keymap.set("n", "<leader>tc", function() jdtls.test_class() end, { buffer = 0 })
+vim.keymap.set("n", "<leader>tm", function() jdtls.test_nearest_method() end, { buffer = 0 })

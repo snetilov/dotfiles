@@ -110,31 +110,6 @@ keymap.set('n', '<leader>gp', '<cmd>lua vim.diagnostic.jump({ count = -1, float 
 keymap.set('n', '<leader>gn', '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>')
 keymap.set('n', '<leader>tr', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
--- Filetype-specific keymaps (these can be done in the ftplugin directory instead if you prefer)
-keymap.set("n", '<leader>go', function()
-  if vim.bo.filetype == 'java' then
-    require('jdtls').organize_imports();
-  end
-end)
-
-keymap.set("n", '<leader>gu', function()
-  if vim.bo.filetype == 'java' then
-    require('jdtls').update_projects_config();
-  end
-end)
-
-keymap.set("n", '<leader>tc', function()
-  if vim.bo.filetype == 'java' then
-    require('jdtls').test_class();
-  end
-end)
-
-keymap.set("n", '<leader>tm', function()
-  if vim.bo.filetype == 'java' then
-    require('jdtls').test_nearest_method();
-  end
-end)
-
 -- Debugging
 keymap.set("n", "<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>")
 keymap.set("n", "<leader>bc", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>")
