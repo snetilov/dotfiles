@@ -37,8 +37,6 @@ local config = {
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
-    "-Dlog.protocol=true",
-    "-Dlog.level=ALL",
     "-javaagent:" .. home .. "/.local/share/nvim/mason/share/jdtls/lombok.jar",
     "-Xmx4g",
     "--add-modules=ALL-SYSTEM",
