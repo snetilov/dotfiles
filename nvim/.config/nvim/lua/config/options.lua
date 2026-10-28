@@ -54,6 +54,13 @@ opt.background = "dark"
 opt.signcolumn = "yes"
 opt.showmode = false
 opt.winborder = "rounded"
+vim.diagnostic.config({
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+    end,
+  },
+})
 
 -- Backspace
 opt.backspace = "indent,eol,start"
