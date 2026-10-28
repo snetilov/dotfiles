@@ -68,10 +68,6 @@ keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 -- Windows.nvim
 keymap.set("n", "<leader>sm", "<cmd>WindowsMaximize<CR>") -- toggle maximize tab
 
--- Nvim-tree
--- keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>") -- toggle file explorer
--- keymap.set("n", "<leader>er", ":NvimTreeFocus<CR>") -- toggle focus to file explorer
--- keymap.set("n", "<leader>ef", ":NvimTreeFindFile<CR>") -- find file in file explorer
 local mini_files = require("mini.files")
 
 -- Open explorer (like toggle, but simpler)
@@ -111,13 +107,12 @@ keymap.set('n', '<leader>fm', function()
 end)
 
 keymap.set('n', '<leader>ft', function()
-  local success, node = pcall(function()
-    return require('nvim-tree.lib').get_node_at_cursor()
-  end)
-  if not success or not node then return end
+  local success, entry = pcall(mini_files.get_fs_entry)
+  if not success or not entry then return end
 
+  mini_files.close()
   picker.grep({
-    dirs = { node.absolute_path },
+    dirs = { entry.path },
   })
 end)
 
