@@ -2,7 +2,8 @@
 local home = vim.env.HOME -- Get the home directory
 
 local jdtls = require("jdtls")
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local root_dir = vim.fs.root(0, { { ".git", "mvnw", "pom.xml", "build.gradle" } })
+local project_name = vim.fn.fnamemodify(root_dir or vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
 local system_os = ""
@@ -55,7 +56,7 @@ local config = {
 
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = vim.fs.root(0, { { ".git", "mvnw", "pom.xml", "build.gradle" } }),
+  root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
