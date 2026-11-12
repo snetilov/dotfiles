@@ -4,34 +4,34 @@
 ; F13 is sent by QMK when B is held.
 F13::
 {
-    firefox := "ahk_exe firefox.exe"
+    browser := "ahk_exe firefox.exe"
 
-    ; Check whether Firefox is running.
-    hwnd := WinExist(firefox)
+    ; Check whether the browser is running.
+    hwnd := WinExist(browser)
 
     if (!hwnd)
     {
-        ; Start Firefox.
+        ; Start the browser.
         Run("firefox.exe")
 
         ; Wait up to 10 seconds for its window.
-        if (!WinWait(firefox, , 10))
+        if (!WinWait(browser, , 10))
         {
-            MsgBox("Could not start Firefox.")
+            MsgBox("Could not start the browser.")
             return
         }
 
-        hwnd := WinExist(firefox)
+        hwnd := WinExist(browser)
     }
 
     ; Restore if minimized.
     if (WinGetMinMax("ahk_id " hwnd) = -1)
         WinRestore("ahk_id " hwnd)
 
-    ; Activate Firefox.
+    ; Activate the browser.
     WinActivate("ahk_id " hwnd)
 
-    ; Wait until Firefox is active.
+    ; Wait until the browser is active.
     if (!WinWaitActive("ahk_id " hwnd, , 3))
         return
 
